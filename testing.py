@@ -54,7 +54,7 @@ trace_fall = go.Scatter(
 )
 
 trace_spring = go.Scatter(
-    x=Spring_data['Year'], y=fall_data['Retention Rate (%)'], 
+    x=spring_data['Year'], y=fall_data['Retention Rate (%)'], 
     mode='lines', name='Spring', line=dict(color='red', dash='dash')
 )
 
