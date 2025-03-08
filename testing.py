@@ -120,3 +120,28 @@ fig.update_layout(barmode='stack',
 # Mostrar el gráfico en Streamlit
 st.plotly_chart(fig)
 
+###########################################################################################################################################################
+trace_fall = go.Scatter(
+    x=fall_data['Year'], y=fall_data['Student Satisfaction (%)'], 
+    mode='lines', name='Fall', line=dict(color='blue')
+)
+
+trace_spring = go.Scatter(
+    x=spring_data['Year'], y=spring_data['Student Satisfaction (%)'], 
+    mode='lines', name='Spring', line=dict(color='red', dash='dash')
+)
+
+# Crear el diseño del gráfico
+layout = go.Layout(
+    title='Comparison of Student Satisfaction (%) by Term',
+    xaxis=dict(title='Year'),
+    yaxis=dict(title='Student Satisfaction (%)')
+)
+
+# Crear la figura con ambas trazas
+fig = go.Figure(data=[trace_fall, trace_spring], layout=layout)
+
+# Mostrar el gráfico en Streamlit
+st.plotly_chart(fig)
+
+
