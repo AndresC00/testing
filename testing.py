@@ -144,4 +144,38 @@ fig = go.Figure(data=[trace_fall, trace_spring], layout=layout)
 # Mostrar el gráfico en Streamlit
 st.plotly_chart(fig)
 
+###############################################################################################################################################
+# Replace 'Fall' with 2 in the 'Term' column
+df['Term'] = df['Term'].replace('Fall', 02)
+df['Term'] = df['Term'].replace('Spring', 01)
+# Combine Year and Month into a string in 'YYYY-MM' format
+df['Formatted Date'] = df['Year'].astype(str) + '-' + df['Term'].astype(str).str.zfill(2)
+
+# Optionally, convert it to a datetime object if needed
+df['Date'] = pd.to_datetime(df['Formatted Date'], format='%Y-%m')
+
+df['Engineering Enrolled (%)'] = df['Engineering Enrolled'] / df['Enrolled'] * 100
+df['Business Enrolled (%)'] = df['Business Enrolled'] / df['Enrolled'] * 100
+df['Arts Enrolled (%)'] = df['Arts Enrolled'] / df['Enrolled'] * 100
+df['Science Enrolled (%)'] = df['Science Enrolled'] / df['Enrolled'] * 100
+
+# Derretir el DataFrame para hacer las categorías (Engineering, Business, etc.) una columna
+df_melted = df.melt(id_vars='Date', 
+                    value_vars=['Engineering Enrolled (%)', 'Business Enrolled (%)', 
+                                'Arts Enrolled (%)', 'Science Enrolled (%)'],
+                    var_name='Category', 
+                    value_name='Percentage')
+
+# Crear la gráfica de línea
+fig = px.line(df_melted, 
+              x='Date', 
+              y='Percentage', 
+              color='Category', 
+              title='Porcentajes de Inscritos por Carrera a lo largo del Tiempo',
+              labels={'Percentage': 'Porcentaje de Inscritos'},
+              markers=True)
+
+# Mostrar la gráfica en Streamlit
+st.plotly_chart(fig)
+
 
