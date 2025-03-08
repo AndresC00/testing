@@ -146,8 +146,8 @@ st.plotly_chart(fig)
 
 ###############################################################################################################################################
 # Replace 'Fall' with 2 in the 'Term' column
-df['Term'] = df['Term'].replace('Fall', 02)
-df['Term'] = df['Term'].replace('Spring', 01)
+df['Term'] = df['Term'].replace('Fall', 2)
+df['Term'] = df['Term'].replace('Spring', 1)
 # Combine Year and Month into a string in 'YYYY-MM' format
 df['Formatted Date'] = df['Year'].astype(str) + '-' + df['Term'].astype(str).str.zfill(2)
 
