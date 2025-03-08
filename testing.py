@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import matplotlib.pyplot as plt
 
 # Cargar los datos desde el archivo CSV
 @st.cache_data
@@ -37,45 +38,6 @@ st.plotly_chart(fig, use_container_width=True)
 
 fall_data = df[df['Term'] == 'Fall']
 spring_data = df[df['Term'] == 'Spring']
-
-# Crear gráfico de líneas para el término "Fall"
-fig_fall = px.line(fall_data,
-                   x='Year',
-                   y='Retention Rate (%)',
-                   markers=True,
-                   trendline="lowess",
-                   line_shape='linear',
-                   name='Fall')
-
-# Crear gráfico de líneas para el término "Spring"
-fig_spring = px.line(spring_data,
-                     x='Year',
-                     y='Retention Rate (%)',
-                     markers=True,
-                     trendline="lowess",
-                     line_shape='linear',
-                     name='Spring')
-
-# Crear una figura combinada
-fig_combined = go.Figure()
-
-# Añadir trazas de Fall y Spring a la figura combinada
-for trace in fig_fall.data:
-    fig_combined.add_trace(trace)
-
-for trace in fig_spring.data:
-    fig_combined.add_trace(trace)
-
-# Personalizar diseño del gráfico combinado
-fig_combined.update_layout(
-    title='Retention Rate Trends for Fall and Spring Terms',
-    xaxis_title='Academic Year',
-    yaxis_title='Retention Rate (%)',
-    hovermode='x unified',
-    template='plotly_white'
-)
-
-# Mostrar gráfico en Streamlit
-st.plotly_chart(fig_combined, use_container_width=True)
-
+    
+st.plotly_chart(px.line(df, x="Year" ,y=["yvar1","yvar2","yvarX"]), use_container_width=True)
 
