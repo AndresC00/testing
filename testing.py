@@ -35,31 +35,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 
-
-
 # Sección de Tendencias de Retención
-st.subheader("Retention Rate Trends Over Time")
+st.subheader("Retention Rate Trends")
+st.line_chart(df.set_index("Year")["Retention Rate (%)"])
 
-# Crear columna combinada Year-Term para el eje temporal
-df['Period'] = df['Year'].astype(str) + " " + df['Term']
-
-# Gráfico de líneas con tendencia
-fig_retention = px.line(df,
-                        x='Period',
-                        y='Retention Rate (%)',
-                        color='Year',
-                        markers=True,
-                        title='Retention Rate Trend by Academic Period',
-                        labels={'Retention Rate (%)': 'Retention Rate', 'Period': 'Academic Period'},
-                        trendline="lowess")  # Suavizado de tendencia
-
-# Personalizar diseño
-fig_retention.update_layout(
-    hovermode='x unified',
-    xaxis_title='Academic Period',
-    yaxis_title='Retention Rate (%)',
-    showlegend=True
-)
-
-# Mostrar gráfico
-st.plotly_chart(fig_retention, use_container_width=True)
