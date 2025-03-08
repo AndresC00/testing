@@ -60,7 +60,7 @@ trace_spring = go.Scatter(
 
 # Crear el diseño del gráfico
 layout = go.Layout(
-    title='Comparison of Fall and Spring Data',
+    title='Comparison of Retention Rate (%) by Term',
     xaxis=dict(title='Year'),
     yaxis=dict(title='Retention Rate (%)')
 )
