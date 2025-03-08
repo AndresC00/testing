@@ -36,27 +36,37 @@ st.plotly_chart(fig, use_container_width=True)
 
 ##############################################################################################################################################################
 
-fall_data = df[df['Term'] == 'Fall']
-spring_data = df[df['Term'] == 'Spring']
-    
 import plotly.graph_objs as go
 
+# Asumimos que los datos ya están cargados en df
+# Filtrar los datos para las estaciones 'Fall' y 'Spring'
+fall_data = df[df['Term'] == 'Fall']
+spring_data = df[df['Term'] == 'Spring']
 
+# Asegurarse de que los datos estén ordenados por el mismo eje (por ejemplo, por 'Date' o algún otro índice relevante)
+fall_data = fall_data.sort_values('Year')
+spring_data = spring_data.sort_values('Year')
 
-# Create the plotly graph for both trend lines
-trace1 = go.Scatter(x=Year, y=Temp, mode='lines', name='Sin(x)', line=dict(color='blue'))
-trace2 = go.Scatter(x=Year, y=Temp, mode='lines', name='Cos(x)', line=dict(color='red', dash='dash'))
-
-# Create the layout of the plot
-layout = go.Layout(
-    title='Comparison of Trend Lines',
-    xaxis=dict(title='X-axis'),
-    yaxis=dict(title='Y-axis')
+# Crear las trazas para los dos conjuntos de datos
+trace_fall = go.Scatter(
+    x=fall_data['Year'], y=fall_data['Retention Rate (%)'], 
+    mode='lines', name='Fall', line=dict(color='blue')
 )
 
-# Create the figure with both traces
-fig = go.Figure(data=[Spring_data, Fall_data], layout=layout)
+trace_spring = go.Scatter(
+    x=fall_data['Year'], y=fall_data['Retention Rate (%)'], 
+    mode='lines', name='Spring', line=dict(color='red', dash='dash')
+)
 
-# Display the plot in Streamlit
+# Crear el diseño del gráfico
+layout = go.Layout(
+    title='Comparison of Fall and Spring Data',
+    xaxis=dict(title='Year'),
+    yaxis=dict(title='Retention Rate (%)')
+)
+
+# Crear la figura con ambas trazas
+fig = go.Figure(data=[trace_fall, trace_spring], layout=layout)
+
+# Mostrar el gráfico en Streamlit
 st.plotly_chart(fig)
-
