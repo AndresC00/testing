@@ -171,7 +171,7 @@ fig = px.line(df_melted,
               x='Date', 
               y='Percentage', 
               color='Category', 
-              title='Porcentajes de Inscritos por Carrera a lo largo del Tiempo',
+              title='Enrolled (%) by Carreer',
               labels={'Percentage': 'Porcentaje de Inscritos'},
               markers=True)
 
