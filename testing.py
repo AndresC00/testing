@@ -8,8 +8,17 @@ df = pd.read_csv("university_student_dashboard_data.csv")
 st.title("University Student Dashboard")
 
 # 1. Total applications, admissions, and enrollments per term
-st.subheader("Total Applications, Admissions, and Enrollments per Term and Year")
-st.bar_chart(df.set_index(["Year", "Term"])[['Applications', 'Admitted', 'Enrolled']])
+fig = px.bar(df,
+             x=['Term','Year'],
+             y=['Applications', 'Admitted', 'Enrolled'],
+             color_discrete_sequence=['#636EFA', '#EF553B', '#00CC96'],
+             barmode='group',
+             title='Total Applications, Admissions, and Enrollments by Year and Term',
+             labels={'value': 'Count', 'variable': 'Category'},
+             facet_col='Year')
+
+# Display the figure in Streamlit
+st.plotly_chart(fig, use_container_width=True)
 
 # 2. Retention rate trends over time
 st.subheader("Retention Rate Trends")
