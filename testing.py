@@ -70,3 +70,55 @@ fig = go.Figure(data=[trace_fall, trace_spring], layout=layout)
 
 # Mostrar el gráfico en Streamlit
 st.plotly_chart(fig)
+
+
+
+##############################################################################################################################################
+
+
+# Calculate the total number of students per year
+df['Total Students'] = df['Engineering Enrolled'] + df['Business Enrolled'] + df['Arts Enrolled'] + df['Science Enrolled'] 
+
+# Normalize the columns to create percentages
+df['Engineering Enrolled (%)'] = df['Engineering Enrolled'] / df['Enrolled'] 
+df['Business Enrolled (%)'] = df['Business Enrolled'] / df['Enrolled'] 
+df['Arts Enrolled (%)'] = df['Arts Enrolled'] / df['Enrolled'] 
+df['Science Enrolled (%)'] = df['Science Enrolled'] / df['Enrolled'] 
+
+
+
+# Melt the DataFrame to have 'Category' and 'Percentage' columns
+df_melted = df.melt(id_vars='Year', 
+                    value_vars=['Engineering Enrolled (%)', 'Business Enrolled (%)', 
+                                'Arts Enrolled (%)', 'Science Enrolled (%)'],
+                    var_name='Category', 
+                    value_name='Percentage')
+
+# Crear el gráfico de barras apiladas 100%
+fig = px.bar(df_melted, 
+             x='Year', 
+             y='Percentage', 
+             color='Category', 
+             title='100% Stacked Bar Chart by Year for Enrollment Categories',
+             labels={'Percentage': 'Percentage'},
+             color_discrete_map={
+                 'Engineering Enrolled (%)': 'blue', 
+                 'Business Enrolled (%)': 'green', 
+                 'Arts Enrolled (%)': 'red',
+                 'Science Enrolled (%)': 'orange'
+             },
+             text='Percentage',
+             category_orders={'Year': sorted(df['Year'].unique())}
+            )
+
+# Formatear el gráfico para mostrar porcentajes
+fig.update_traces(texttemplate='%{text:.1%}', textposition='outside', textfont_size=12)
+fig.update_layout(barmode='stack', 
+                  yaxis=dict(tickformat='.0%', ticksuffix='%'),
+                  xaxis_title='Year',
+                  yaxis_title='Percentage'
+                 )
+
+# Mostrar el gráfico en Streamlit
+st.plotly_chart(fig)
+
