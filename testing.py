@@ -8,8 +8,8 @@ df = pd.read_csv("university_student_dashboard_data.csv")
 st.title("University Student Dashboard")
 
 # 1. Total applications, admissions, and enrollments per term
-st.subheader("Total Applications, Admissions, and Enrollments")
-st.bar_chart(df.set_index("Term")[['Applications', 'Admitted', 'Enrolled']])
+st.subheader("Total Applications, Admissions, and Enrollments per Term and Year")
+st.bar_chart(df.set_index(["Year", "Term"])[['Applications', 'Admitted', 'Enrolled']])
 
 # 2. Retention rate trends over time
 st.subheader("Retention Rate Trends")
