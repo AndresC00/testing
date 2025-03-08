@@ -39,5 +39,24 @@ st.plotly_chart(fig, use_container_width=True)
 fall_data = df[df['Term'] == 'Fall']
 spring_data = df[df['Term'] == 'Spring']
     
-st.plotly_chart(px.line(df, x="Year" ,y=["yvar1","yvar2","yvarX"]), use_container_width=True)
+import plotly.graph_objs as go
+
+
+
+# Create the plotly graph for both trend lines
+trace1 = go.Scatter(x=Year, y=Temp, mode='lines', name='Sin(x)', line=dict(color='blue'))
+trace2 = go.Scatter(x=Year, y=Temp, mode='lines', name='Cos(x)', line=dict(color='red', dash='dash'))
+
+# Create the layout of the plot
+layout = go.Layout(
+    title='Comparison of Trend Lines',
+    xaxis=dict(title='X-axis'),
+    yaxis=dict(title='Y-axis')
+)
+
+# Create the figure with both traces
+fig = go.Figure(data=[Spring_data, Fall_data], layout=layout)
+
+# Display the plot in Streamlit
+st.plotly_chart(fig)
 
