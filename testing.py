@@ -29,3 +29,6 @@ fig = px.bar(df,
              title='Total Applications, Admissions, and Enrollments by Year and Term',
              labels={'value': 'Count', 'variable': 'Category'},
              facet_col='Year')
+
+# Mostrar el gráfico en Streamlit
+st.plotly_chart(fig, use_container_width=True)
