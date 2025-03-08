@@ -29,7 +29,3 @@ fig = px.bar(df,
              title='Total Applications, Admissions, and Enrollments by Year and Term',
              labels={'value': 'Count', 'variable': 'Category'},
              facet_col='Year')
-
-# 6. Compare trends between departments, retention rates, and satisfaction levels
-st.subheader("Comparison of Trends")
-st.line_chart(df.set_index("Year")[['Retention Rate (%)', 'Student Satisfaction (%)']])
