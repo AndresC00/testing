@@ -76,9 +76,6 @@ st.plotly_chart(fig)
 ##############################################################################################################################################
 
 
-# Calculate the total number of students per year
-df['Total Students'] = df['Engineering Enrolled'] + df['Business Enrolled'] + df['Arts Enrolled'] + df['Science Enrolled'] 
-
 # Normalize the columns to create percentages
 df['Engineering Enrolled (%)'] = df['Engineering Enrolled'] / df['Enrolled'] 
 df['Business Enrolled (%)'] = df['Business Enrolled'] / df['Enrolled'] 
@@ -87,19 +84,20 @@ df['Science Enrolled (%)'] = df['Science Enrolled'] / df['Enrolled']
 
 
 
-# Melt the DataFrame to have 'Category' and 'Percentage' columns
-df_melted = df.melt(id_vars='Year', 
+# Derretir el DataFrame para que las categorías (Engineering, Business, etc.) estén en una columna 'Category'
+df_melted = df.melt(id_vars=['Year', 'Term'], 
                     value_vars=['Engineering Enrolled (%)', 'Business Enrolled (%)', 
                                 'Arts Enrolled (%)', 'Science Enrolled (%)'],
                     var_name='Category', 
                     value_name='Percentage')
 
-# Crear el gráfico de barras apiladas 100%
+# Crear el gráfico de barras apiladas 100% por Year y Term
 fig = px.bar(df_melted, 
              x='Year', 
              y='Percentage', 
              color='Category', 
-             title='100% Stacked Bar Chart by Year for Enrollment Categories',
+             facet_row='Term', 
+             title='100% Stacked Bar Chart by Year and Term for Enrollment Categories',
              labels={'Percentage': 'Percentage'},
              color_discrete_map={
                  'Engineering Enrolled (%)': 'blue', 
